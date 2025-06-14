@@ -1,0 +1,22 @@
+<html>
+<head></head>
+<body>
+    <script>
+        let path = "data.json";
+
+        var request = new XMLHttpRequest();
+        request.open('GET', path, false);  
+        request.send(null);
+
+        if (request.status === 200) {
+          var graphdata = request.responseText;
+          } else {
+          console.error('Error fetching JSON:', request.statusText);
+        }
+
+        let data = JSON.parse(graphdata);
+        console.log(data.find(p => p.date === "2025-06-16")["locations"]);
+
+    </script>
+</body>
+</html>

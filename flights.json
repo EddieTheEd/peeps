@@ -1,0 +1,32 @@
+[
+  {
+    "individual": "Ed",
+    "to": "Sydney",
+    "date": "2025-06-13"
+  },
+  {
+    "individual": "Yape",
+    "to": "Sydney",
+    "date": "2025-06-16"
+  },
+  {
+    "individual": "Ed",
+    "to": "Melbourne",
+    "date": "2025-06-16"
+  },
+  {
+    "individual": "Yape",
+    "to": "Perth",
+    "date": "2025-06-17"
+  },
+  {
+    "individual": "Athu",
+    "to": "Perth",
+    "date": "2025-06-24"
+  },
+  {
+    "individual": "Ed",
+    "to": "Perth",
+    "date": "2025-06-27"
+  }
+]
