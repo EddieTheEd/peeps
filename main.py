@@ -8,6 +8,8 @@ with open('base.json', 'r') as file:
 with open('flights.json', 'r') as file:
     flights = json.load(file)
 
+fulldates = []
+initiallocs = []
 
 # Relate locations to individuals
 
@@ -19,7 +21,10 @@ for individual in people:
             locations.append((flight["date"], flight["to"]))
 
     individual["locations"] = locations
+
+    initiallocs.append([individual["individual"], individual["initiallocation"]])
     
+fulldates.append({"date": "2025-01-01", "locations": initiallocs})
 
 # Generate locations of everyone on all day from 01-01-2025 to 31-12-2025, store as list
 
@@ -27,9 +32,6 @@ def daterange(start, end):
   return [start + timedelta(n) for n in range(int((end - start).days))]
 
 dates = daterange(datevalue(2025, 1, 2), datevalue(2025, 12, 31))
-
-fulldates = []
-
 
 # Having every date stored with each individual's location on that date
 
