@@ -20,15 +20,17 @@ function main() {
   console.log(data.find(p => p.date === date)["locations"]);
 }
 
-// Get today's date (start of day, to avoid timezone issues)
-const today = new Date(Date.now() + 86400000);
-today.setHours(0, 0, 0, 0);
-
-// Use this as the minimum date
-const minDate = new Date(today);
-
-// Start at today's date
-let date = today.toISOString().split("T")[0];
+const formatter = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "Australia/Melbourne",
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+});
+const parts = formatter.format(new Date()).split("-");
+let [year, month, day] = parts.map(Number);
+const todayMelbourne = new Date(Date.UTC(year, month - 1, day));
+const minDate = todayMelbourne;
+let date = minDate.toISOString().split("T")[0];
 
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("datetext").textContent = date;
