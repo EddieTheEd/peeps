@@ -43,7 +43,6 @@ function main() {
       trueCities.push(cities[i][1])
   }
 
-
   reallyTrueCities = [...new Set(trueCities)]
   
   
@@ -70,11 +69,37 @@ function main() {
   }
   
   // TODO: destroy lines after new!
+  
+  // Adding people to each city.
+  // We start by determining how many people need to be added to each city.
+  // Using this we iterate with increment on the value of the width.
+  
+  const peoplePerCity = {};
 
-  console.log(reallyTrueCities)
-  console.log(flights)
+  people.forEach(([person, city]) => {
+    if (!peoplePerCity[city]) {
+      peoplePerCity[city] = [];
+    }
+    peoplePerCity[city].push(person);
+  });
 
-  console.log(locations)
+  // We now need to filter out people who are on a plane! This means they will be the ones who are not on the list of cities.
+  
+  const real = {};
+  const plane = {};
+
+
+  for (const [city, people] of Object.entries(peoplePerCity)) {
+    if (reallyTrueCities.includes(city)) {
+      real[city] = people;
+    } else {
+      plane[city] = people;
+    }
+  }
+
+  // Here, the 'real' object contains each city that is generated, and each person present in that city.
+  // The 'plane' object contains each city-city pair with each person on it.
+  // We can now start adding people!
 }
 
 const formatter = new Intl.DateTimeFormat("en-CA", {
@@ -136,4 +161,3 @@ document.getElementById("doubleright").onclick = function() {
   main();
 };
 
-console.log(base);
