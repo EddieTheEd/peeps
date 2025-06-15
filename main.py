@@ -39,15 +39,29 @@ for date in dates:
     currentlocations = []
     for individual in people:
         notfoundloc = True
+        prev_location = None
+        previous_date = datetime.strptime(str(date), "%Y-%m-%d") - timedelta(days=1)
+
+        for location in sorted(individual["locations"], key=lambda x: datetime.strptime(x[0], "%Y-%m-%d")):
+            loc_date = datetime.strptime(location[0], "%Y-%m-%d")
+            if loc_date <= previous_date:
+                prev_location = location[1]
+            else:
+                break
+
         while notfoundloc:
             for location in individual["locations"]:
-                if datetime.strptime(str(date), "%Y-%m-%d") > datetime.strptime(location[0], "%Y-%m-%d"):
+                loc_date = datetime.strptime(location[0], "%Y-%m-%d")
+                curr_date = datetime.strptime(str(date), "%Y-%m-%d")
+
+                if curr_date > loc_date:
                     currentlocations.append((individual["individual"], location[1]))
                     notfoundloc = False
-                if datetime.strptime(str(date), "%Y-%m-%d") == datetime.strptime(location[0], "%Y-%m-%d"):
-                    currentlocations.append((individual["individual"], "Flying to " + location[1]))
+                elif curr_date == loc_date:
+                    currentlocations.append((individual["individual"], (prev_location, location[1])))
                     notfoundloc = False
 
+    # a very lazy fix
     seen = set()
     result = []
 

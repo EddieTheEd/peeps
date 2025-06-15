@@ -14,10 +14,67 @@ function loadData(path) {
 
 data = loadData("data.json")
 base = loadData("base.json")
+locations = loadData("locationdata.json")
 
 function main() {
   console.log(date)
-  console.log(data.find(p => p.date === date)["locations"]);
+  
+  people = data.find(p => p.date === date)["locations"];
+
+  const cities = [];
+  const flights = [];
+
+  people.forEach(([name, loc]) => {
+    const locations = Array.isArray(loc) ? loc : [loc];
+    if (locations.length === 1) {
+      cities.push([name, locations[0]]);
+    } else {
+      flights.push([name, locations]);
+    }
+  });
+
+  // Cities just need to have their line generated first
+  
+  // Cleanup the cities list to actually only include cities
+  
+  trueCities = []
+
+  for (let i = 0; i < cities.length; i++) {
+      trueCities.push(cities[i][1])
+  }
+
+
+  reallyTrueCities = [...new Set(trueCities)]
+  
+  
+  let map = document.getElementById("map-container");
+
+  for (let i = 0; i < reallyTrueCities.length; i++) {
+    let linetype = locations.find(l => l.city === reallyTrueCities[i])["linetype"]
+    let coords = locations.find(l => l.city === reallyTrueCities[i])["coordinates"]
+
+    const line = document.createElement('img');
+    if (linetype == 1) {
+      line.src = 'images/line1.png';
+    } else {
+      line.src = 'images/line2.png';
+    }
+
+    line.style.position = 'absolute';
+    line.style.top = `${coords[0]}%`;
+    line.style.left = `${coords[1]}%`;
+    line.style.width = '4%';
+    line.classList.add("temp")
+    map.appendChild(line);
+
+  }
+  
+  // TODO: destroy lines after new!
+
+  console.log(reallyTrueCities)
+  console.log(flights)
+
+  console.log(locations)
 }
 
 const formatter = new Intl.DateTimeFormat("en-CA", {
