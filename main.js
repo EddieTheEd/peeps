@@ -1,3 +1,6 @@
+// TODO: Use absolute coordinates (px) and not relative coordinates
+// TODO: Add line between cities?
+
 function loadData(path) {
   var request = new XMLHttpRequest();
   request.open("GET", path, false);  

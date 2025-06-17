@@ -2,6 +2,7 @@ import json
 from datetime import timedelta, datetime
 from datetime import date as datevalue
 
+# TODO: Make it so that flights do not have to be in order. Also, inevitably move this Python code into JS.
 with open('base.json', 'r') as file:
     people = json.load(file)
 
