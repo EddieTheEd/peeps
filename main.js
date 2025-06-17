@@ -16,9 +16,16 @@ data = loadData("data.json")
 base = loadData("base.json")
 locations = loadData("locationdata.json")
 
+// line offsets for the start of the balls
+lt1offset = [-2.5, 4.5]
+lt2offset = [-0.5, 4.5] 
+planeoffset = [-5.5,0]
+
 function main() {
-  console.log(date)
-  
+
+  const temps = document.querySelectorAll('.temp');
+  temps.forEach(el => el.remove());
+
   people = data.find(p => p.date === date)["locations"];
 
   const cities = [];
@@ -100,24 +107,95 @@ function main() {
   // Here, the 'real' object contains each city that is generated, and each person present in that city.
   // The 'plane' object contains each city-city pair with each person on it.
   // We can now start adding people!
+  
+  for (const [city, people] of Object.entries(real)) {
+    counter = 0
+
+    let linetype = locations.find(l => l.city === city)["linetype"]
+    let coords = locations.find(l => l.city === city)["coordinates"]
+
+    if (linetype == 1) {
+      start = coords.map((val, idx) => val + lt1offset[idx])
+    } else {
+      start = coords.map((val, idx) => val + lt2offset[idx])
+    }
+
+    for (const person of people) {
+      // get person's image url 
+      let imagesrc = base.find(p => p.individual === person)["imageurl"];
+      
+      profile = document.createElement('img');
+      profile.src = imagesrc;
+      profile.style.position = 'absolute';
+      profile.style.top = `${start[0]}%`;
+      profile.style.left = `${start[1]+counter}%`;
+      profile.style.width = '2.5%';
+      profile.classList.add("temp")
+      profile.style.aspectRatio = "1 / 1";
+      profile.style.borderRadius = "50%";
+      profile.style.border = "0.22vw solid red";
+      profile.style.objectFit = "cover";
+      map.appendChild(profile);
+
+      counter = counter + 3.5 // incremental distance between balls on the same city 
+    }
+  }
+
+  // Now we will add the people on planes
+  for (const [city, people] of Object.entries(plane)) {
+    let cities = city.split(",")
+    
+    // Coordinates of each city
+    location1 = locations.find(l => l.city === cities[0])["coordinates"]
+    location2 = locations.find(l => l.city === cities[1])["coordinates"]
+
+    // Plane coordinates at midpoint
+    planecoords = [(location1[0]+location2[0])/2, (location1[1]+location2[1])/2]
+
+    // Get angle pointing from first city to second city
+    planeangle = Math.atan2(location2[0]-location1[0], location2[1]-location1[1]) * (-180 / Math.PI)
+
+    // Generate plane, rotate it to point to destination
+    planeimage = document.createElement("img")
+    planeimage.src = 'images/airplane.png';
+    planeimage.style.position = 'absolute';
+    planeimage.style.top = `${planecoords[0]}%`;
+    planeimage.style.left = `${planecoords[1]}%`;
+    planeimage.style.width = '2.5%';
+    planeimage.classList.add("temp")
+    planeimage.style.objectFit = "cover";
+    planeimage.style.transform = `rotate(-${planeangle}deg)`
+    map.appendChild(planeimage);
+
+    // Adding people
+    counter = 0
+    start = planecoords.map((val, idx) => val + planeoffset[idx])
+
+  for (const person of people) {
+      // get person's image url 
+      let imagesrc = base.find(p => p.individual === person)["imageurl"];
+
+      profile = document.createElement('img');
+      profile.src = imagesrc;
+      profile.style.position = 'absolute';
+      profile.style.top = `${start[0]+counter}%`;
+      profile.style.left = `${start[1]}%`;
+      profile.style.width = '2.5%';
+      profile.classList.add("temp")
+      profile.style.aspectRatio = "1 / 1";
+      profile.style.borderRadius = "50%";
+      profile.style.border = "0.22vw solid red";
+      profile.style.objectFit = "cover";
+      map.appendChild(profile);
+
+      counter = counter + 3.5 // incremental distance between balls on the same city 
+    }
+  
+  }
+
 }
 
-const formatter = new Intl.DateTimeFormat("en-CA", {
-  timeZone: "Australia/Melbourne",
-  year: "numeric",
-  month: "2-digit",
-  day: "2-digit",
-});
-const parts = formatter.format(new Date()).split("-");
-let [year, month, day] = parts.map(Number);
-const todayMelbourne = new Date(Date.UTC(year, month - 1, day));
-const minDate = todayMelbourne;
-let date = minDate.toISOString().split("T")[0];
 
-document.addEventListener("DOMContentLoaded", () => {
-  document.getElementById("datetext").textContent = date;
-  main();
-});
 
 
 function incrementDate(rate) {
@@ -161,3 +239,20 @@ document.getElementById("doubleright").onclick = function() {
   main();
 };
 
+
+const formatter = new Intl.DateTimeFormat("en-CA", {
+  timeZone: "Australia/Melbourne",
+  year: "numeric",
+  month: "2-digit",
+  day: "2-digit",
+});
+const parts = formatter.format(new Date()).split("-");
+let [year, month, day] = parts.map(Number);
+const todayMelbourne = new Date(Date.UTC(year, month - 1, day));
+const minDate = todayMelbourne;
+let date = minDate.toISOString().split("T")[0];
+
+document.addEventListener("DOMContentLoaded", () => {
+  document.getElementById("datetext").textContent = date;
+  main();
+});

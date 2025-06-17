@@ -1,14 +1,17 @@
 [
   {
     "individual": "Yape",
-    "initiallocation": "Canberra"
+    "initiallocation": "Canberra",
+    "imageurl": "images/yape.jpeg"
   },
   {
     "individual": "Athu",
-    "initiallocation": "Sydney"
+    "initiallocation": "Sydney",
+    "imageurl": "images/athu.jpg"
   },
   {
     "individual": "Ed",
-    "initiallocation": "Melbourne"
+    "initiallocation": "Melbourne",
+    "imageurl": "images/ed.png"
   }
 ]
