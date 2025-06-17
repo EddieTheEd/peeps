@@ -31,7 +31,7 @@ fulldates.append({"date": "2025-01-01", "locations": initiallocs})
 def daterange(start, end):
   return [start + timedelta(n) for n in range(int((end - start).days))]
 
-dates = daterange(datevalue(2025, 1, 2), datevalue(2025, 12, 31))
+dates = daterange(datevalue(2025, 1, 2), datevalue(2026, 1, 1))
 
 # Having every date stored with each individual's location on that date
 

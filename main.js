@@ -153,7 +153,7 @@ function main() {
     planecoords = [(location1[0]+location2[0])/2, (location1[1]+location2[1])/2]
 
     // Get angle pointing from first city to second city
-    planeangle = Math.atan2(location2[0]-location1[0], location2[1]-location1[1]) * (-180 / Math.PI)
+    planeangle = Math.atan2(location2[0]-location1[0], location2[1]-location1[1]) * (180 / Math.PI)
 
     // Generate plane, rotate it to point to destination
     planeimage = document.createElement("img")
@@ -164,7 +164,7 @@ function main() {
     planeimage.style.width = '2.5%';
     planeimage.classList.add("temp")
     planeimage.style.objectFit = "cover";
-    planeimage.style.transform = `rotate(-${planeangle}deg)`
+    planeimage.style.transform = `rotate(${planeangle}deg)`
     map.appendChild(planeimage);
 
     // Adding people
@@ -212,10 +212,11 @@ function incrementDate(rate) {
 
 function decrementDate(rate) {
   const current = new Date(date);
+  const min = new Date("2025-01-01");
 
   current.setDate(current.getDate() - rate);
 
-  if (current >= minDate) {
+  if (current >= min) {
     date = current.toISOString().split("T")[0];
     document.getElementById("datetext").textContent = date;
   }
@@ -249,8 +250,7 @@ const formatter = new Intl.DateTimeFormat("en-CA", {
 const parts = formatter.format(new Date()).split("-");
 let [year, month, day] = parts.map(Number);
 const todayMelbourne = new Date(Date.UTC(year, month - 1, day));
-const minDate = todayMelbourne;
-let date = minDate.toISOString().split("T")[0];
+let date = todayMelbourne.toISOString().split("T")[0];
 
 document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("datetext").textContent = date;
