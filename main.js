@@ -160,6 +160,7 @@ function main() {
     // Generate plane, rotate it to point to destination
     planeimage = document.createElement("img")
     planeimage.src = 'images/airplane.png';
+    planeimage.alt = "plane";
     planeimage.style.position = 'absolute';
     planeimage.style.top = `${planecoords[0]}px`;
     planeimage.style.left = `${planecoords[1]}px`;
