@@ -117,7 +117,7 @@ let data = fulldates;
 lt1offset = [-25, 45]
 lt2offset = [-05, 45] 
 planeoffset = [-50,-10]
-balldistance = 60
+balldistance = 55
 
 function main() {
 
