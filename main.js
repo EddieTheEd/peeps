@@ -14,9 +14,11 @@ function loadData(path) {
   return JSON.parse(graphdata);
 }
 
-base = loadData("base.json")
-locations = loadData("locationdata.json")
-flights = loadData("flights.json")
+maindata = loadData("main.json")
+
+base = maindata[0]
+locations = maindata[1]
+flights = maindata[2]
 
 // Following code imported and slightly adjusted from prior Python code.
 

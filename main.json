@@ -1,0 +1,83 @@
+[
+  [
+    {
+      "individual": "Yape",
+      "initiallocation": "Canberra",
+      "imageurl": "images/yape.jpeg"
+    },
+    {
+      "individual": "Athu",
+      "initiallocation": "Sydney",
+      "imageurl": "images/athu.jpg"
+    },
+    {
+      "individual": "Ed",
+      "initiallocation": "Perth",
+      "imageurl": "images/ed.png"
+    }
+  ],
+  [
+    {
+      "city": "Canberra",
+      "coordinates": [576.463, 798.299],
+      "linetype": 2
+    },
+    {
+      "city": "Sydney",
+      "coordinates": [538.418, 835.149],
+      "linetype": 1
+    },
+    {
+      "city": "Melbourne",
+      "coordinates": [622.119, 720.866],
+      "linetype": 2
+    },
+    {
+      "city": "Perth",
+      "coordinates": [500.358, 208.254],
+      "linetype": 1
+    }
+  ],
+  [
+    {
+      "individual": "Ed",
+      "to": "Melbourne",
+      "date": "2025-02-19"
+    },
+    {
+      "individual": "Ed",
+      "to": "Sydney",
+      "date": "2025-06-13"
+    },
+    {
+      "individual": "Yape",
+      "to": "Sydney",
+      "date": "2025-06-16"
+    },
+    {
+      "individual": "Ed",
+      "to": "Melbourne",
+      "date": "2025-06-16"
+    },
+    {
+      "individual": "Yape",
+      "to": "Perth",
+      "date": "2025-06-17"
+    },
+    {
+      "individual": "Athu",
+      "to": "Perth",
+      "date": "2025-06-23"
+    },
+    {
+      "individual": "Ed",
+      "to": "Perth",
+      "date": "2025-06-27"
+    },
+    {
+      "individual": "Ed",
+      "to": "Melbourne",
+      "date": "2025-07-19"
+    }
+  ]
+]
