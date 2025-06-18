@@ -20,9 +20,10 @@ base = loadData("base.json")
 locations = loadData("locationdata.json")
 
 // line offsets for the start of the balls
-lt1offset = [-2.5, 4.5]
-lt2offset = [-0.5, 4.5] 
-planeoffset = [-5.5,0]
+lt1offset = [-25, 45]
+lt2offset = [-05, 45] 
+planeoffset = [-50,-10]
+balldistance = 60
 
 function main() {
 
@@ -70,15 +71,13 @@ function main() {
     }
 
     line.style.position = 'absolute';
-    line.style.top = `${coords[0]}%`;
-    line.style.left = `${coords[1]}%`;
-    line.style.width = '4%';
+    line.style.top = `${coords[0]}px`;
+    line.style.left = `${coords[1]}px`;
+    line.style.width = '42.7164px';
     line.classList.add("temp")
     map.appendChild(line);
 
   }
-  
-  // TODO: destroy lines after new!
   
   // Adding people to each city.
   // We start by determining how many people need to be added to each city.
@@ -130,17 +129,17 @@ function main() {
       profile = document.createElement('img');
       profile.src = imagesrc;
       profile.style.position = 'absolute';
-      profile.style.top = `${start[0]}%`;
-      profile.style.left = `${start[1]+counter}%`;
-      profile.style.width = '2.5%';
+      profile.style.top = `${start[0]}px`;
+      profile.style.left = `${start[1]+counter}px`;
+      profile.style.width = '48px';
       profile.classList.add("temp")
       profile.style.aspectRatio = "1 / 1";
       profile.style.borderRadius = "50%";
-      profile.style.border = "0.22vw solid red";
+      profile.style.border = "3.58209px solid red";
       profile.style.objectFit = "cover";
       map.appendChild(profile);
 
-      counter = counter + 3.5 // incremental distance between balls on the same city 
+      counter = counter + balldistance // incremental distance between balls on the same city 
     }
   }
 
@@ -162,9 +161,9 @@ function main() {
     planeimage = document.createElement("img")
     planeimage.src = 'images/airplane.png';
     planeimage.style.position = 'absolute';
-    planeimage.style.top = `${planecoords[0]}%`;
-    planeimage.style.left = `${planecoords[1]}%`;
-    planeimage.style.width = '2.5%';
+    planeimage.style.top = `${planecoords[0]}px`;
+    planeimage.style.left = `${planecoords[1]}px`;
+    planeimage.style.width = '26.6866px';
     planeimage.classList.add("temp")
     planeimage.style.objectFit = "cover";
     planeimage.style.transform = `rotate(${planeangle}deg)`
@@ -177,21 +176,21 @@ function main() {
   for (const person of people) {
       // get person's image url 
       let imagesrc = base.find(p => p.individual === person)["imageurl"];
-
+      
       profile = document.createElement('img');
       profile.src = imagesrc;
       profile.style.position = 'absolute';
-      profile.style.top = `${start[0]+counter}%`;
-      profile.style.left = `${start[1]}%`;
-      profile.style.width = '2.5%';
+      profile.style.top = `${start[0]}px`;
+      profile.style.left = `${start[1]+counter}px`;
+      profile.style.width = '48px';
       profile.classList.add("temp")
       profile.style.aspectRatio = "1 / 1";
       profile.style.borderRadius = "50%";
-      profile.style.border = "0.22vw solid red";
+      profile.style.border = "3.58209px solid red";
       profile.style.objectFit = "cover";
       map.appendChild(profile);
 
-      counter = counter + 3.5 // incremental distance between balls on the same city 
+      counter = counter + balldistance // incremental distance between balls on the same city 
     }
   
   }
