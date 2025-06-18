@@ -218,9 +218,7 @@ function main() {
       start = coords.map((val, idx) => val + lt2offset[idx])
     }
 
-    console.log(coords)
-    console.log(window.innerWidth, window.innerHeight)
-    console.log(coords[1] / window.innerWidth, coords[0] / window.innerHeight)
+    // TODO: only confetti if its the first day more than 3 peeps are in the city?
     if (people.length >= 3) {
       confetti({
       particleCount: 150,
