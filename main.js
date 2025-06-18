@@ -221,12 +221,12 @@ function main() {
     // TODO: only confetti if its the first day more than 3 peeps are in the city?
     if (people.length >= 3) {
       confetti({
-      particleCount: 150,
+      particleCount: 200,
       startVelocity: 20,
       spread: 360,
       origin: {
         x: (coords[1]+190.08) / window.innerWidth,
-        y: (coords[0]+108.385+40.2985) / window.innerHeight // special numbers :)
+        y: (coords[0]+108.385+40.2985-100) / window.innerHeight // special numbers :)
       }
       });
     }
