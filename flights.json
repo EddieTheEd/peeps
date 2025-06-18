@@ -1,6 +1,11 @@
 [
   {
     "individual": "Ed",
+    "to": "Melbourne",
+    "date": "2025-02-19"
+  },
+  {
+    "individual": "Ed",
     "to": "Sydney",
     "date": "2025-06-13"
   },

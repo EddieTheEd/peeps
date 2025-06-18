@@ -1,4 +1,3 @@
-// TODO: Use absolute coordinates (px) and not relative coordinates
 // TODO: Add line between cities?
 
 function loadData(path) {
@@ -15,9 +14,104 @@ function loadData(path) {
   return JSON.parse(graphdata);
 }
 
-data = loadData("data.json")
 base = loadData("base.json")
 locations = loadData("locationdata.json")
+flights = loadData("flights.json")
+
+// Following code imported and slightly adjusted from prior Python code.
+
+function dateRange(start, end) {
+  const dates = [];
+  let current = new Date(start);
+  end = new Date(end);
+
+  while (current < end) {
+    dates.push(new Date(current));
+    current.setDate(current.getDate() + 1);
+  }
+  return dates;
+}
+
+for (const individual of base) {
+  const locations = [["2025-01-01", individual.initiallocation]];
+
+  for (const flight of flights) {
+    if (flight.individual === individual.individual) {
+      locations.push([flight.date, flight.to]);
+    }
+  }
+
+  locations.sort((a, b) => new Date(a[0]) - new Date(b[0]));
+
+  individual.locations = locations;
+}
+
+let fulldates = [];
+let initiallocs = base.map(ind => [ind.individual, ind.initiallocation]);
+
+fulldates.push({ date: "2025-01-01", locations: initiallocs });
+
+let dates = dateRange("2025-01-02", "2026-01-01");
+
+for (const date of dates) {
+  const dateStr = date.toISOString().split("T")[0];
+  const previousDate = new Date(date);
+  previousDate.setDate(previousDate.getDate() - 1);
+  const prevStr = previousDate.toISOString().split("T")[0];
+
+  const currentlocations = [];
+
+  for (const individual of base) {
+    const locs = individual.locations;
+    let prevLoc = locs[0][1];
+
+    for (let i = 0; i < locs.length; i++) {
+      const [locDate, loc] = locs[i];
+      if (locDate <= prevStr) {
+        prevLoc = loc;
+      }
+    }
+
+    let found = false;
+
+    for (let i = 0; i < locs.length; i++) {
+      const [locDate, loc] = locs[i];
+
+      if (locDate === dateStr) {
+        currentlocations.push([individual.individual, [prevLoc, loc]]);
+        found = true;
+        break;
+      }
+
+      if (locDate < dateStr) {
+        prevLoc = loc;
+      }
+    }
+
+    if (!found) {
+      currentlocations.push([individual.individual, prevLoc]);
+    }
+
+  }
+
+  let seen = new Set();
+  let result = [];
+
+  for (let i = currentlocations.length - 1; i >= 0; i--) {
+    const [name, city] = currentlocations[i];
+    if (!seen.has(name)) {
+      seen.add(name);
+      result.unshift([name, city]);
+    }
+  }
+
+  fulldates.push({
+    date: dateStr,
+    locations: result
+  });
+}
+
+let data = fulldates;
 
 // line offsets for the start of the balls
 lt1offset = [-25, 45]
