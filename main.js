@@ -210,12 +210,27 @@ function main() {
     counter = 0
 
     let linetype = locations.find(l => l.city === city)["linetype"]
-    let coords = locations.find(l => l.city === city)["coordinates"]
+    coords = locations.find(l => l.city === city)["coordinates"]
 
     if (linetype == 1) {
       start = coords.map((val, idx) => val + lt1offset[idx])
     } else {
       start = coords.map((val, idx) => val + lt2offset[idx])
+    }
+
+    console.log(coords)
+    console.log(window.innerWidth, window.innerHeight)
+    console.log(coords[1] / window.innerWidth, coords[0] / window.innerHeight)
+    if (people.length >= 3) {
+      confetti({
+      particleCount: 150,
+      startVelocity: 20,
+      spread: 360,
+      origin: {
+        x: (coords[1]+190.08) / window.innerWidth,
+        y: (coords[0]+108.385+40.2985) / window.innerHeight // special numbers :)
+      }
+      });
     }
 
     for (const person of people) {
