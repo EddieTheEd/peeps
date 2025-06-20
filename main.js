@@ -18,7 +18,7 @@ maindata = loadData("main.json")
 
 base = maindata[0]
 locations = maindata[1]
-flights = maindata[2]
+rawflights = maindata[2]
 
 // Following code imported and slightly adjusted from prior Python code.
 
@@ -37,7 +37,7 @@ function dateRange(start, end) {
 for (const individual of base) {
   const locations = [["2025-01-01", individual.initiallocation]];
 
-  for (const flight of flights) {
+  for (const flight of rawflights) {
     if (flight.individual === individual.individual) {
       locations.push([flight.date, flight.to]);
     }
@@ -218,18 +218,26 @@ function main() {
       start = coords.map((val, idx) => val + lt2offset[idx])
     }
 
-    // TODO: only confetti if its the first day more than 3 peeps are in the city?
-    if (people.length >= 3) {
+    prev = new Date(date);
+    prev.setDate(prev.getDate() - 1);
+    prev = prev.toISOString().split("T")[0];
+
+    validConfetti = rawflights.some(flight => 
+      flight.date === prev && flight.to === city
+    );
+
+    if (validConfetti && people.length >= 3) {
       confetti({
-      particleCount: 200,
-      startVelocity: 20,
-      spread: 360,
-      origin: {
-        x: (coords[1]+190.08) / window.innerWidth,
-        y: (coords[0]+108.385+40.2985-100) / window.innerHeight // special numbers :)
-      }
+        particleCount: 200,
+        startVelocity: 20,
+        spread: 360,
+        origin: {
+          x: (coords[1] + 190.08) / window.innerWidth,
+          y: (coords[0] + 108.385 + 40.2985 - 100) / window.innerHeight
+        }
       });
     }
+
 
     for (const person of people) {
       // get person's image url 
